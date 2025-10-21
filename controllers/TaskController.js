@@ -1,5 +1,7 @@
 import Task from "../models/TaskModel.js";
 
+
+
 const getTask = async ( req, res) => {
     const tasks = await Task.find();
     res.status(200).json({msg:'ok', data: tasks});
@@ -19,7 +21,8 @@ const postTask = async(req, res) => {
         data: {_id: task._id, fecha: task.fecha } 
     });
 
-
 }
+
+
 
 export { getTask, postTask}

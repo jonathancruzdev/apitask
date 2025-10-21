@@ -8,6 +8,7 @@ const userSchema = new Schema({
     },
     email: {
         type: String,
+        required: true
     },
     password: {
         type: String,
@@ -24,5 +25,5 @@ const userSchema = new Schema({
 });
 
 
-const Task = mongoose.model('Task', taskSchema);
-export default Task;
+const User = mongoose.model('User', userSchema);
+export default User;
