@@ -1,10 +1,11 @@
 import express from "express"
-import { getTask, postTask } from "../controllers/TaskController.js" 
+import { getTask, postTask, getTaskById } from "../controllers/TaskController.js" 
 
 const router = express.Router();
 
-router.get('/', getTask)
-router.post('/', postTask)
+router.get('/', getTask);
+router.get('/:id', getTaskById);
+router.post('/', postTask);
 
 
 export default router
