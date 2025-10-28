@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt"
 import dotenv from "dotenv"
 import User from "../models/UserModel.js";
+import jsonwebtoken from "jsonwebtoken";
 
 dotenv.config();
 const SECRET_KEY = process.env.SECRET_KEY;
@@ -30,11 +31,36 @@ const postUser = async(req, res) => {
     console.log( {user});
     await user.save();
     res.status(202).json({
-        msg: 'Usuario Registrado', 
+        msg: 'User Registrado', 
         data: {_id: user._id, fecha: user.created } 
     });
 
 
 }
 
-export { getUsers, postUser}
+const auth = async(req, res) => {
+    try {
+        const { email, password } = req.body;
+        const usuario = await User.findOne({email});
+        if(!usuario){
+            res.status(404).json({msg:'El email no existe'});
+            return;
+        }
+        const status = await bcrypt.compare(password, User.password);
+        if( !status){
+            res.status(404).json({msg: 'Clave invalida'});
+            return;
+        }
+        const payload = {
+            id: User._id,
+            nombre: User.name
+        }
+        const jwt = jsonwebtoken.sign( payload, SECRET_KEY, { expiresIn: '1h'} );
+        res.json({msg: 'Credenciales correctas', data: jwt});
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({msg: 'Tenemos un error en el servidor'});
+    }
+}
+
+export { getUsers, postUser, auth}
