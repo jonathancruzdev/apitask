@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get('/', getUsers);
 router.post('/', postUser);
-router.post('/', auth);
+router.post('/auth', auth);
 
 
 

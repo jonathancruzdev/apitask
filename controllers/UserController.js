@@ -46,14 +46,14 @@ const auth = async(req, res) => {
             res.status(404).json({msg:'El email no existe'});
             return;
         }
-        const status = await bcrypt.compare(password, User.password);
+        const status = await bcrypt.compare(password, usuario.password);
         if( !status){
             res.status(404).json({msg: 'Clave invalida'});
             return;
         }
         const payload = {
-            id: User._id,
-            nombre: User.name
+            id: usuario._id,
+            nombre: usuario.name
         }
         const jwt = jsonwebtoken.sign( payload, SECRET_KEY, { expiresIn: '1h'} );
         res.json({msg: 'Credenciales correctas', data: jwt});
