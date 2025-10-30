@@ -2,17 +2,23 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const taskSchema = new Schema({
-    descripcion: {
+    description: {
         type: String,
-        required: true
+        required: true,
+        trim: true
     },
-    completada: {
+    completed: {
         type: Boolean,
         default: false
     },
-    fecha: {
+    created: {
         type: Date,
         default: Date.now
+    },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        required: true
     }
 });
 

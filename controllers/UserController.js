@@ -53,7 +53,7 @@ const auth = async(req, res) => {
         }
         const payload = {
             id: usuario._id,
-            nombre: usuario.name
+            name: usuario.name
         }
         const jwt = jsonwebtoken.sign( payload, SECRET_KEY, { expiresIn: '1h'} );
         res.json({msg: 'Credenciales correctas', data: jwt});
